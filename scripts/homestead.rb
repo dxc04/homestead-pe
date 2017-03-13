@@ -217,6 +217,13 @@ class Homestead
             end
         end
 
+        # Install DynamoDB If Necessary
+        if settings.has_key?("dynamodb") && settings["dynamodb"]
+            config.vm.provision "shell" do |s|
+                s.path = scriptDir + "/install-dynamo.sh"
+            end
+        end
+
         # Configure All Of The Configured Databases
         if settings.has_key?("databases")
             settings["databases"].each do |db|
